@@ -4,7 +4,6 @@
 <title>Phonebook</title>
 </head>
 <body>
-
 <form type="POST" id='add'>
 <input type='text' id='action' name='action' value='add' hidden><br>
 <b><label id='notification' style="color: red;"></label></b>

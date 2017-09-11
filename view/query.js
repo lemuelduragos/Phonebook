@@ -6,7 +6,6 @@ function clear()
         form2[0].reset();
          $("#button").val('Submit');
     }
-
   $("table").on("click","button#edit", function() {
         var textID = $(this).parent().siblings("#rid").text();
         var textName = $(this).parent().siblings("#rname").text();
@@ -87,7 +86,6 @@ function loadTable(){
         }
         else
         {
-          $("#action").val('search');
             $.ajax({
             type: "POST",
             url: "controller/contact_controller.php",
@@ -108,7 +106,10 @@ function loadTable(){
        }
     });
 
+    $("#add").on("keyup", "input", function() {
+        $("#action").val('add');
+    });
+
 
 });
-
 

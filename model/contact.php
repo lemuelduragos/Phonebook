@@ -3,7 +3,7 @@
 class Contact {
 
 	function selectContact($variable) {
-		$sql = "Select * FROM Contacts";
+		$sql = "Select * FROM Contacts ORDER BY name";
 		$stmt = $variable->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,7 +38,7 @@ class Contact {
 	}
 
 	function searchContact($pdo, $search) {
-		$sqlsearch = "Select * FROM Contacts WHERE name LIKE '%$search%' OR number LIKE '%$search%'";
+		$sqlsearch = "Select * FROM Contacts WHERE name LIKE '%$search%' OR number LIKE '%$search%' ORDER BY name";
 		$stmts = $pdo->prepare($sqlsearch);
 		$stmts->execute();
 		$cou = $stmts->rowCount();
