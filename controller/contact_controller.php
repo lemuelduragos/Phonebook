@@ -8,36 +8,22 @@ if(isset($_POST['action']) && !isset($_POST['search']))
 	$number = $_POST['inputNumber'];
 	$numcheck = ctype_digit((string)$number);
 
-	if($_POST['action'] == 'delete')
-	{
+	if($_POST['action'] == 'delete') {
 		$id = $_POST['inputIDC'];
 		$action = $_POST['action'];
 	}
-	else if(trim($name, " ")!="" && trim($number, " ")!="" && $numcheck == 'true')
-	{
-		/*if(is_int($number))
-		{*/
-			$action = $_POST['action'];
-/*		}
-		else
-		{
-			$action='';
-		}*/
-
+	else if(trim($name, " ")!="" && trim($number, " ")!="" && $numcheck == 'true') {
+		$action = $_POST['action'];
 	}
-	else
-	{
+	else {
 		$action = '';
 	}
 
 }
-else if(isset($_POST['search']))
-{
+else if(isset($_POST['search']) {
 	$search = $_POST['search'];
 	$action = $_POST['action'];
-}
-else
-{
+} else {
 	$action = 'select';
 }
 
@@ -54,7 +40,7 @@ switch ($action) {
         break;
     case 'select':
         $arrayContact = Contact::selectContact($pdo);
-        $table ="<tr>ID<th>Name</th><th>Number</th></tr>";
+        $table ="<tr><th>Name</th><th>Number</th></tr>";
 		foreach($arrayContact as $row) {
 			$idc = $row['id'];
 			$table .= "<tr><td id='rid' hidden>".$row['id']."</td>";
@@ -75,7 +61,7 @@ switch ($action) {
         break;
     case 'search':
         $Searchresults = Contact::searchContact($pdo, $search);  
-        $tables ="<tr>ID<th>Name</th><th>Number</th></tr>";
+        $tables ="<tr><th>Name</th><th>Number</th></tr>";
 		foreach($Searchresults as $rows) {
 			$tables .= "<tr><td id='rid' hidden>".$rows['id']."</td>";
 			$tables .= "<td id = 'rname'>".$rows['name']."</td>";
