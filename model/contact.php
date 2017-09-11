@@ -6,7 +6,6 @@ class Contact {
 		$sql = "Select * FROM Contacts";
 		$stmt = $variable->prepare($sql);
 		$stmt->execute();
-		$cou = $stmt->rowCount();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $result;
 	}
@@ -37,7 +36,15 @@ class Contact {
 	    $stmt = $conn->prepare($sqlUpdate);
 	    $stmt->execute();
 	}
-}
 
+	function searchContact($pdo, $search) {
+		$sqlsearch = "Select * FROM Contacts WHERE name LIKE '%$search%' OR number LIKE '%$search%'";
+		$stmts = $pdo->prepare($sqlsearch);
+		$stmts->execute();
+		$cou = $stmts->rowCount();
+		$results = $stmts->fetchAll(PDO::FETCH_ASSOC);
+		return $results;
+	}
+}
 
 ?>

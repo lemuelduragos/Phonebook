@@ -2,6 +2,8 @@ function clear()
     {
         var form = $("#add");
         form[0].reset();
+        var form2 = $("#searchf");
+        form2[0].reset();
          $("#button").val('Submit');
     }
 
@@ -40,6 +42,7 @@ function loadTable(){
             url: "controller/contact_controller.php",
             data: $('#add').serialize(),
             success: function(response) {
+                $("#notification").text(response);
                 loadTable();
                 clear();
 
@@ -74,6 +77,36 @@ function loadTable(){
             }
     });
 
+    $("#search").on("keyup", function() {
+        var searchKey = $("#search").val();
+        if (searchKey == '')
+        {
+           $("#action").val('add');
+           loadTable();
+            clear(); 
+        }
+        else
+        {
+          $("#action").val('search');
+            $.ajax({
+            type: "POST",
+            url: "controller/contact_controller.php",
+            data: { action: 'search', search: $('#search').val() },
+            success: function(result) {
+                    $('#result').html(result);
+                    $("#result").trigger('update');
+                }
+            });     
+        }     
+ 
+    });
+
+    $('#result').on('update', function(){
+       var rowCount = $('#result tr').length;
+       if(rowCount == 1) {
+            $('#result').html("Record not found");
+       }
+    });
 
 
 });

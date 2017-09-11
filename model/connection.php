@@ -13,6 +13,7 @@ class DatabaseConnection extends PDO
         parent::__construct($dns, $settings['database']['username'], $settings['database']['password']);
 
     }
+    private function __clone() { }
 }
 ?>
 
