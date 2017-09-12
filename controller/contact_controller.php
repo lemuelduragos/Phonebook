@@ -8,39 +8,46 @@ if(isset($_POST['action']) && !isset($_POST['search']))
 	$number = $_POST['inputNumber'];
 	$numcheck = ctype_digit((string)$number);
 
-	if($_POST['action'] == 'delete') {
+	if($_POST['action'] == 'delete')
+	{
 		$id = $_POST['inputIDC'];
 		$action = $_POST['action'];
 	}
-	else if(trim($name, " ")!="" && trim($number, " ")!="" && $numcheck == 'true') {
-		$action = $_POST['action'];
+	else if(trim($name, " ")!="" && trim($number, " ")!="" && $numcheck == 'true')
+	{
+			$action = $_POST['action'];
+
 	}
-	else {
+	else
+	{
 		$action = '';
 	}
 
 }
-else if(isset($_POST['search']) {
+else if(isset($_POST['search']))
+{
 	$search = $_POST['search'];
 	$action = $_POST['action'];
-} else {
+}
+else
+{
 	$action = 'select';
 }
 
-
-include '../model/connection.php';
-$pdo = new DatabaseConnection();
 include '../model/contact.php';
 
 
 
 switch ($action) {
 	case 'add':
-        Contact::addContact($pdo, $name, $number);
+		$add = new Contact();
+        $add->addContact($name, $number);
+        echo $action;
         break;
     case 'select':
-        $arrayContact = Contact::selectContact($pdo);
-        $table ="<tr><th>Name</th><th>Number</th></tr>";
+    	$select = new Contact();
+        $arrayContact = $select->selectContact();
+        $table ="<tr>ID<th>Name</th><th>Number</th></tr>";
 		foreach($arrayContact as $row) {
 			$idc = $row['id'];
 			$table .= "<tr><td id='rid' hidden>".$row['id']."</td>";
@@ -54,14 +61,17 @@ switch ($action) {
 		echo json_encode(array("separate" => $id, "table" => $table));
         break;
     case 'edit':
-        Contact::updateContact($pdo, $name, $number, $id);
+    	$edit = new Contact();
+        $edit->updateContact($name, $number, $id);
         break;
     case 'delete':
-        Contact::deleteContact($pdo, $id);
+    	$delete = new Contact();
+        $delete->deleteContact($id);
         break;
     case 'search':
-        $Searchresults = Contact::searchContact($pdo, $search);  
-        $tables ="<tr><th>Name</th><th>Number</th></tr>";
+    	$searchq = new Contact();
+        $Searchresults = $searchq->searchContact($search);  
+        $tables ="<tr>ID<th>Name</th><th>Number</th></tr>";
 		foreach($Searchresults as $rows) {
 			$tables .= "<tr><td id='rid' hidden>".$rows['id']."</td>";
 			$tables .= "<td id = 'rname'>".$rows['name']."</td>";

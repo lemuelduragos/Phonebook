@@ -1,5 +1,4 @@
-function clear()
-    {
+function clear() {
         var form = $("#add");
         form[0].reset();
         var form2 = $("#searchf");
@@ -66,6 +65,7 @@ function loadTable(){
                 success: function(response) {
                     loadTable();
                     clear();
+                    alert(response);
 
                 }
             });
@@ -105,11 +105,6 @@ function loadTable(){
             $('#result').html("Record not found");
        }
     });
-
-    $("#add").on("keyup", "input", function() {
-        $("#action").val('add');
-    });
-
 
 });
 
